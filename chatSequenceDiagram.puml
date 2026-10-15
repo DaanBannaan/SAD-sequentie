@@ -1,0 +1,24 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
+
+autonumber
+
+
+Person(user, "Speler 1")
+
+Component(cli, "CLI-Service [1]", "Frontend terminal via waar speler 1 de game bedient")
+Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
+Component(chat, "Chat-Service", "Via dit component kunnen spelers met elkaar chatten.")
+Component(cli2, "CLI-Service [2]", "Frontend terminal via waar de speler 2 de game bedient")
+
+Person(user2, "Speler 2")
+
+Rel(user, cli, "schrijft en stuurt bericht")
+Rel(cli, communication, "sendMessage(senderId, messageContent)")
+Rel(communication, chat, "broadcastMessage(message, teamPlayers[])")
+Rel(chat, cli2, "chatUpdate(message, senderId)")
+Rel(cli2, user2, "ontvangt en leest het bericht")
+
+
+
+@enduml

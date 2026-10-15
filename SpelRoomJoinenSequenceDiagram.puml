@@ -1,0 +1,54 @@
+@startuml
+'
+autonumber
+
+'Element Declaration Syntax:
+
+'Person(alias, "label", [descr], [sprite], [tags], [link])
+'Container(alias, "label", "technology", [descr], [sprite], [tags], [link])
+'Rel(from, to, "label", [technology], [descr], [sprite], [tags], [link])
+'Rel_Response(from, to, "label", [technology], [descr], [sprite], [tags], [link])
+
+'Person(user, "Speler")
+'Component(configuration, "Configuration-Service", "Hier kan het gedrag van een agent aangepast worden en kunnen nieuwe modules toegevoegd worden.")
+'Component(world, "World-Service", "Hier vindt de wereldgeneratie plaats en bevind zich de wereldstatus.")
+'Component(engine, "Game-Engine-Service", "Deze component bevat de logica van het spel zelf.")
+'Component(agent, "Agent-Service", "Deze component bevat de logica van een agent.")
+'Component(player, "Player-Service", "Deze component bevat de logica van een karakter.")
+'Component(monster, "Monster-Service", "Deze component bevat de logica van een monster.")
+'Component(save, "Save-and-Load-Service", "Deze component regelt het laden en opslaan van het spel.")
+'Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
+'Component(cli, "CLI-Service", "Dit is de frontend terminal waarmee spelers kunnen communiceren met de game.")
+'Component(chat, "Chat-Service", "Via dit component kunnen spelers met elkaar chatten.")
+'Component(logging, "Logging-Service", "Hier worden CPU gebruik, RAM gebruik, aantal spelers, netwerkvertraging, connecties, gevechten, agent-overnames, fouten en saves gelogd.")
+'Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
+
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
+
+title Speler joint een bestaande room
+
+Person(user, "Speler")
+Person(owner, "Host-speler")
+
+Component(cli, "CLI-Service", "Frontend terminal via waar de spelers de game bedienen")
+Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
+Component(logging, "Logging-Service", "Hier worden gebeurtenissen en fouten gelogd.")
+
+Rel(user, cli, "Geeft aan room te willen zoeken")
+Rel(cli, room, "zoekRooms()")
+
+Rel(room, cli, "beschikbareRooms: List<Room>")
+
+Rel(user, cli, "kiest room om te joinen")
+Rel(cli, room, "joinRoom(roomID)")
+
+alt Room bestaat niet of is niet toegankelijk
+Rel(room, cli, "error room niet toegankelijk")
+else Room bestaat en is toegankelijk
+Rel(room, logging, "logSpelerJoin()")
+Rel(room, cli, "room: Room")
+Rel(cli, user, "Toont room en deelnemers")
+end
+
+@enduml

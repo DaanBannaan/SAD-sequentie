@@ -1,0 +1,18 @@
+@startuml
+title Development View - Multiplayer Text-Based RPG
+
+
+package "Spelkern" {
+    [Game Engine] as ENGINE
+    [Spelregels] as RULES
+    [Game State] as STATE
+}
+
+package "Karakterbeheer" {
+    [Spelers] as PLAYER
+    [Monsters] as MONSTER
+    [AI] as AGENT
+    [Krachten en attributen] as ATTR
+}
+
+@enduml
