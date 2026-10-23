@@ -32,22 +32,30 @@ Person(user, "Speler")
 Person(owner, "Host-speler")
 
 Component(cli, "CLI-Service", "Frontend terminal via waar de spelers de game bedienen")
+Component(engine, "Game-Engine-Service", "Deze component bevat de logica van het spel zelf.")
+Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
 Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
 Component(logging, "Logging-Service", "Hier worden gebeurtenissen en fouten gelogd.")
 
-Rel(user, cli, "Geeft aan room te willen zoeken")
-Rel(cli, room, "zoekRooms()")
+Rel(user, engine, "Geeft aan room te willen zoeken")
+Rel(engine, communication, "zoekRooms()")
+Rel(communication, room, "zoekRooms()")
+
 
 Rel(room, cli, "beschikbareRooms: List<Room>")
+Rel(cli, user, "Toon beschikbare rooms")
 
-Rel(user, cli, "kiest room om te joinen")
-Rel(cli, room, "joinRoom(roomID)")
+
+Rel(user, engine, "kiest room om te joinen")
+Rel(engine, communication, "joinRoom(roomID)")
+Rel(communication, room, "joinRoom(roomID)")
+
 
 alt Room bestaat niet of is niet toegankelijk
 Rel(room, cli, "error room niet toegankelijk")
 else Room bestaat en is toegankelijk
 Rel(room, logging, "logSpelerJoin()")
-Rel(room, cli, "room: Room")
+Rel(room, cli, "toonRoom(room)")
 Rel(cli, user, "Toont room en deelnemers")
 end
 
