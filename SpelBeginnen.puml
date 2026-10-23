@@ -26,7 +26,7 @@ Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende
 Component(engine, "Game-Engine-Service", "Deze component bevat de logica van het spel zelf.")
 Component(world, "World-Service", "Hier vindt de wereldgeneratie plaats en bevind zich de wereldstatus.")
 
-Rel(room, cli, "startCountdown(startCountdownValue)")
+Rel(room, room, "startCountdown(startCountdownValue)")
 loop while countdown not complete or amountOfPlayers < minimumAmountOfPlayers
 
 alt Room contains 30>players<40 && countdown < 5 minutes

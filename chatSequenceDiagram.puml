@@ -6,18 +6,29 @@ autonumber
 
 Person(user, "Speler 1")
 
-Component(cli, "CLI-Service [1]", "Frontend terminal via waar speler 1 de game bedient")
+Component(cli1, "CLI-Service [speler 1]", "Frontend terminal via waar speler 1 de game bedient (en andere spelers)")
+Component(engine, "Game Engine Service", "Deze component bevat de logica van het spel zelf.")
 Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
 Component(chat, "Chat-Service", "Via dit component kunnen spelers met elkaar chatten.")
-Component(cli2, "CLI-Service [2]", "Frontend terminal via waar de speler 2 de game bedient")
+Component(cli2, "CLI-Service [speler 2]", "Frontend terminal via waar speler 2 de game bedient (en andere spelers)")
 
 Person(user2, "Speler 2")
 
-Rel(user, cli, "schrijft en stuurt bericht")
-Rel(cli, communication, "sendMessage(senderId, messageContent)")
+Rel(user, engine, "schrijft en stuurt bericht")
+Rel(engine, communication, "sendMessage(senderId, messageContent)")
 Rel(communication, chat, "broadcastMessage(message, teamPlayers[])")
 Rel(chat, cli2, "chatUpdate(message, senderId)")
+autonumber 4
+Rel(chat, cli1, "chatUpdate(message, senderId)")
+
+note right
+    chatUpdate wordt aangeroepen bij elke ontvanger in het spel.
+end note
+
 Rel(cli2, user2, "ontvangt en leest het bericht")
+autonumber 5
+Rel(cli1, user, "ontvangt en leest het bericht")
+
 
 
 
