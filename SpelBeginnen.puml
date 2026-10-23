@@ -29,14 +29,13 @@ Component(world, "World-Service", "Hier vindt de wereldgeneratie plaats en bevin
 Rel(room, room, "startCountdown(startCountdownValue)")
 loop while countdown not complete or amountOfPlayers < minimumAmountOfPlayers
 
-alt Room contains 30>players<40 && countdown < 5 minutes
-Rel(room, cli, "startCountdown(5 minutes)")
+alt Room contains 30<players<40 && countdown < 5 minutes
+Rel(room, room, "startCountdown(5 minutes)")
 else Room contains 40>players<maxPlayers  && countdown < 30 seconds
-Rel(room, cli, "startCountdown(30 seconds)")
+Rel(room, room, "startCountdown(30 seconds)")
 end
 Rel(room, room, "checkAmountOfPlayers")
-Rel(room, cli, "checkCountdown")
-Rel(cli, room, "countdown: int")
+Rel(room, cli, "showCountdown()")
 end loop
 
 Rel(room, cli, "showLoading()")
@@ -44,8 +43,9 @@ Rel(cli, user, "show loading")
 Rel(room, communication, "activateCommunicationprotocol()")
 Rel(communication, engine, "createNewWorld()")
 Rel(engine, world, "createNewWorld()")
-Rel(world, engine, "worldSuccesfullyCreated: Boolean")
-Rel(engine, cli, "showWorldCreatedSuccesfully()")
+Rel(world, engine, "showWorldCreatedSuccesfully()")
+Rel(engine, communication, "showWorldCreatedSuccesfully()")
+Rel(communication, cli, "Show world created succesfully")
 Rel(cli, user, "Show world created succesfully")
 
 
