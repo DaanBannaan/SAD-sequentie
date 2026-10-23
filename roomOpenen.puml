@@ -19,19 +19,23 @@ autonumber
 
 title Speler opent een room
 
-Person(user, "Speler")
-Component(cli, "CLI-Service", "Dit is de frontend terminal waarmee spelers kunnen communiceren met de game.")
+Person(user1, "Speler1")
+Person(user2, "Speler2")
+Component(cli1, "CLI-Service_1", "Dit is de frontend terminal waarmee spelers kunnen communiceren met de game.")
+Component(cli2, "CLI-Service_2", "Dit is de frontend terminal waarmee spelers kunnen communiceren met de game.")
 Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
 
 
-Rel(user, cli, "Geeft aan een room te willen openen")
-Rel(cli, room, "openRoom()")
+Rel(user1, cli, "Geeft aan een room te willen openen")
+Rel(cli1, room, "openRoom()")
 Rel(room, room, "createRoom()")
 Rel(room, room, "broadcastRoom()")
 loop Zolang room open en spel nog niet begonnen
 Rel(room, room, "checkRoomStatus()")
-Rel(room, cli, "room: Room")
-Rel(cli, user, "Toon roomstatus")
+Rel(room, cli1, "room: Room")
+Rel(room, cli2, "room: Room")
+Rel(cli1, user1, "Toon roomstatus")
+Rel(cli1, user2, "Toon roomstatus")
 
 
 @enduml
