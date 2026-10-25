@@ -1,9 +1,56 @@
-@startuml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
 
+'SITUATIE 1: USER GEEFT AAN BOT OVER TE LATEN NEMEN
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
 autonumber
 
-Person(user, "Speler 1")
+
+Person(speler, "Speler 1")
+Component(tui, "Terminal User-Interface")
+Component(engine, "Game Engine Service")
+
+Rel(speler, tui, geeft aan zijn karakter over te willen laten nemen door agent)
+
+Component(agent, "Agent Service")
+
+Rel(engine, agent, takeControlPlayer(playerId))
 
 
-r
+@enduml
+
+
+
+SITUATIE 2: USER DISCONNECTS, THAN RECONNECTS
+
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
+autonumber
+
+'Disconnects:
+
+Person(speler, "Speler 1")
+Component(tui, "Terminal User-Interface")
+Component(comms, "Communication Protocol")
+Component(engine, "Game Engine Service")
+
+Rel(speler, speler, verbreekt verbinding met spel)
+Rel(comms, comms, connectie met speler 1 is verloren)
+Rel(comms, engine, playerDisconnected(playerId))
+
+Component(agent, "Agent Service")
+
+Rel(engine, agent, takeControlPlayer(playerId))
+
+
+'Reconnects:
+
+Rel(speler, comms, herstelt verbinding met spel)
+Rel(comms, speler, stuurt live-updates)
+Rel(speler, tui, geeft aan weer control te willen nemen)
+
+
+
+
+@enduml
