@@ -7,14 +7,33 @@ autonumber
 
 
 Person(speler, "Speler 1")
-Component(tui, "Terminal User-Interface")
+Component(cli, "Command Line-Interface")
 Component(engine, "Game Engine Service")
 
-Rel(speler, tui, geeft aan zijn karakter over te willen laten nemen door agent)
+Rel(speler, cli, geeft aan zijn karakter over te willen laten nemen door agent)
+Rel(cli, engine, TransferCharacterControl())
 
+Component(player, "Player Service")
 Component(agent, "Agent Service")
 
+Rel(engine, player, disableCharacterControl(playerId))
+Rel(player, engine, succes)
+
+note left: character control inputs van de speler worden nu genegeerd.
+
+Component(comms, "Communication Protocol")
+Rel(engine, comms, transferPlayerControl(playerId))
+Rel(comms, engine, )
+note left: request om character te laten besturen door een agent, wordt doorgestuurd naar de relevante client/node (die besturing van agents handelt.)
+Rel(engine, agent, )
+
+
 Rel(engine, agent, takeControlPlayer(playerId))
+Rel(agent, engine, succes)
+
+
+
+
 
 
 @enduml
@@ -31,7 +50,7 @@ autonumber
 'Disconnects:
 
 Person(speler, "Speler 1")
-Component(tui, "Terminal User-Interface")
+Component(cli, "Command Line-Interface")
 Component(comms, "Communication Protocol")
 Component(engine, "Game Engine Service")
 
@@ -42,14 +61,27 @@ Rel(comms, engine, playerDisconnected(playerId))
 Component(agent, "Agent Service")
 
 Rel(engine, agent, takeControlPlayer(playerId))
+Rel(agent, engine, succes)
+
+note right: agent (ISA) bestuurt nu het Character van speler 1
 
 
 'Reconnects:
 
 Rel(speler, comms, herstelt verbinding met spel)
 Rel(comms, speler, stuurt live-updates)
-Rel(speler, tui, geeft aan weer control te willen nemen)
+Rel(speler, cli, geeft aan weer control te willen nemen)
 
+Rel(cli, engine, takeCharacterControl(playerId))
+Rel(engine, agent, disableCharacterControl(playerId))
+Rel(agent, engine, succes)
+
+Component(player, "Player Service")
+Rel(engine, player, takeCharacterControl())
+Rel(player, engine, succes)
+Rel(engine, cli, succes)
+'Rel(engine, )
+note left: speler 1 bestuurt nu weer zijn Character
 
 
 
