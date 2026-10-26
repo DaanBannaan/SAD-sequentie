@@ -26,7 +26,7 @@ Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende
 Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
 
 
-Rel(engine, user, "Geeft aan een room te willen openen")
+Rel(user, engine, "Geeft aan een room te willen openen")
 Rel(engine, communication, "openRoom()")
 Rel(communication, room, "openRoom()")
 Rel(room, room, "createRoom()")
