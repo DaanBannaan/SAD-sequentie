@@ -12,7 +12,7 @@ autonumber
 'Component(monster, "Monster-Service", "Deze component bevat de logica van een monster.")
 'Component(save, "Save-and-Load-Service", "Deze component regelt het laden en opslaan van het spel.")
 'Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
-'Component(cli, "CLI-Service", "Dit is de frontend terminal waarmee spelers kunnen communiceren met de game.")
+'Component(cli, "CLI-Service", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
 'Component(chat, "Chat-Service", "Via dit component kunnen spelers met elkaar chatten.")
 'Component(logging, "Logging-Service", "Hier worden CPU gebruik, RAM gebruik, aantal spelers, netwerkvertraging, connecties, gevechten, agent-overnames, fouten en saves gelogd.")
 'Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
@@ -20,7 +20,7 @@ autonumber
 title Spel beginnen
 
 Person(user, "Speler")
-Component(cli, "CLI-Service", "Dit is de frontend terminal waarmee spelers kunnen communiceren met de game.")
+Component(cli, "CLI-Service", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
 Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
 Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
 Component(engine, "Game-Engine-Service", "Deze component bevat de logica van het spel zelf.")

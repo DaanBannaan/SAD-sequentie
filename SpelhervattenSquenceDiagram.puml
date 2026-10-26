@@ -1,0 +1,45 @@
+@startuml
+'
+autonumber
+
+'Element Declaration Syntax:
+
+'Person(alias, "label", [descr], [sprite], [tags], [link])
+'Container(alias, "label", "technology", [descr], [sprite], [tags], [link])
+'Rel(from, to, "label", [technology], [descr], [sprite], [tags], [link])
+'Rel_Response(from, to, "label", [technology], [descr], [sprite], [tags], [link])
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
+
+title Speler hervat spel
+
+Person(user, "Speler")
+
+Component(cli, "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
+Component(engine1, "Game-Engine-Service [1]", "Deze component bevat de logica van het spel zelf.")
+Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
+Component(engine2, "Game-Engine-Service [2]", "Deze component bevat de logica van het spel zelf.")
+Component(world, "World-Service", "Hier vindt de wereldgeneratie plaats en bevind zich de wereldstatus.")
+Component(cli2, "CLI-Service [2]", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
+
+Rel(user, engine1, "Geeft aan spel te willen hervatten")
+Rel(engine1, world, "hervatSpel()")
+Rel(engine1, communication, "hervatSpel()")
+note top
+Elke speler moet het spel kunnen hervatten
+end note
+Rel(communication, engine2, "hervatSpel()")
+Rel(engine2, world, "hervatSpel()")
+Rel(communication, cli, "spelHervat()")
+autonumber 6
+Rel(communication, cli2, "spelhervat()")
+
+
+
+
+
+
+
+
+
+@enduml

@@ -1,0 +1,44 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
+
+autonumber
+
+'Person(user, "Speler")
+'Component(configuration, "Configuration-Service", "Hier kan het gedrag van een agent aangepast worden en kunnen nieuwe modules toegevoegd worden.")
+'Component(world, "World-Service", "Hier vindt de wereldgeneratie plaats en bevind zich de wereldstatus.")
+'Component(engine, "Game-Engine-Service", "Deze component bevat de logica van het spel zelf.")
+'Component(agent, "Agent-Service", "Deze component bevat de logica van een agent.")
+'Component(player, "Player-Service", "Deze component bevat de logica van een karakter.")
+'Component(monster, "Monster-Service", "Deze component bevat de logica van een monster.")
+'Component(save, "Save-and-Load-Service", "Deze component regelt het laden en opslaan van het spel.")
+'Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
+'Component(cli, "CLI-Service", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
+'Component(chat, "Chat-Service", "Via dit component kunnen spelers met elkaar chatten.")
+'Component(logging, "Logging-Service", "Hier worden CPU gebruik, RAM gebruik, aantal spelers, netwerkvertraging, connecties, gevechten, agent-overnames, fouten en saves gelogd.")
+'Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
+
+title Agent configureren
+
+Person(user, "Speler")
+Component(cli, "CLI-Service", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
+Component(engine, "Game-Engine-Service", "Deze component bevat de logica van het spel zelf.")
+Component(agent, "Agent-Service", "Deze component bevat de logica van een agent.")
+
+Rel(user, engine, "Speler geeft aan agent te willen aanpassen")
+Rel(engine, cli, "ToonOpties()")
+Rel(user, engine, "Speler geeft aanpassing door")
+Rel(engine, agent, "PasAgentAan(Optie)")
+Rel(engine, cli, "ToonAanpassing(Optie)")
+Rel(engine, user, "Speler ziet aanpassing")
+
+
+
+
+
+
+
+
+
+
+
+@enduml

@@ -30,11 +30,12 @@ title Speler pauzeert spel
 
 Person(user, "Speler")
 
-Component(cli, "CLI-Service", "Frontend terminal via waar de spelers de game bedienen")
+Component(cli, "CLI-Service", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
 Component(engine1, "Game-Engine-Service [1]", "Deze component bevat de logica van het spel zelf.")
 Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
 Component(engine2, "Game-Engine-Service [2]", "Deze component bevat de logica van het spel zelf.")
 Component(world, "World-Service", "Hier vindt de wereldgeneratie plaats en bevind zich de wereldstatus.")
+Component(cli2, "CLI-Service [2]", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
 
 Rel(user, engine1, "Geeft aan spel te willen pauzeren")
 Rel(engine1, world, "pauzeerSpel()")
@@ -44,6 +45,10 @@ Voor elke speler moet het spel gepauzeert worden
 end note
 Rel(communication, engine2, "pauzeerSpel()")
 Rel(engine2, world, "pauzeerSpel()")
+Rel(communication, cli, "spelGepauzeert()")
+autonumber 6
+Rel(communication, cli2, "spelGepauzeert()")
+
 
 
 

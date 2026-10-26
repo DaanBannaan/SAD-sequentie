@@ -6,11 +6,11 @@ autonumber
 
 Person(user, "Speler 1")
 
-Component(cli1, "CLI-Service [speler 1]", "Frontend terminal via waar speler 1 de game bedient (en andere spelers)")
+Component(cli1, "CLI-Service [speler 1]", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
 Component(engine, "Game Engine Service", "Deze component bevat de logica van het spel zelf.")
 Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
 Component(chat, "Chat-Service", "Via dit component kunnen spelers met elkaar chatten.")
-Component(cli2, "CLI-Service [speler 2]", "Frontend terminal via waar speler 2 de game bedient (en andere spelers)")
+Component(cli2, "CLI-Service [speler 2]", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
 
 Person(user2, "Speler 2")
 

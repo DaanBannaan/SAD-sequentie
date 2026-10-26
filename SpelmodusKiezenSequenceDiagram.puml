@@ -30,7 +30,7 @@ title Speler kiest een spelmodus
 
 Person(owner, "Host-speler")
 
-Component(cli, "CLI-Service", "Frontend terminal via waar de spelers de game bedienen")
+Component(cli, "CLI-Service", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
 Component(engine, "Game-Engine-Service", "Deze component bevat de logica van het spel zelf.")
 Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
 Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
