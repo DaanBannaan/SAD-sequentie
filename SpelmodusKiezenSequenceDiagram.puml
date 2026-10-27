@@ -30,16 +30,28 @@ title Speler kiest een spelmodus
 
 Person(owner, "Host-speler")
 
-Component(cli, "CLI-Service", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
+Component(cli1, "CLI-Service", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
 Component(engine, "Game-Engine-Service", "Deze component bevat de logica van het spel zelf.")
 Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
-Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
+Component(room1, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
+Component(room2, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
+Component(cli2, "CLI-Service", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
+
+Person(user, "speler")
 
 Rel(owner, engine, "Geeft aan welke spelmodus hij wilt kiezen")
 Rel(engine, communication, "PasSpelmodusAan(spelmodus)")
-Rel(communication, room, "PasSpelmodusAan(spelmodus)")
-Rel(room, cli, "toonSpelstatus(spelstatus)")
-Rel(cli, owner, "Ziet dat aanpassen gelukt is")
+Rel(communication, room1, "PasSpelmodusAan(spelmodus)")
+Rel(room1, cli1, "toonSpelstatus(spelstatus)")
+Rel(cli1, owner, "Ziet dat aanpassen gelukt is")
+Rel(communication, room2, "PasSpelmodusAan(spelmodus)")
+note top
+Dit geld voor alle spelers in de room.
+end note
+autonumber 4
+Rel(room2, cli2, "toonSpelstatus(spelstatus)")
+autonumber 5
+Rel(cli2, user, "Ziet dat aanpassen gelukt is")
 
 
 

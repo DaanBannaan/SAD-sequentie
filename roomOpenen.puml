@@ -31,8 +31,9 @@ Rel(engine, communication, "openRoom()")
 Rel(communication, room, "openRoom()")
 Rel(room, room, "createRoom()")
 Rel(room, room, "broadcastRoom()")
-loop Zolang room open en spel nog niet begonnen
-Rel(room, room, "checkRoomStatus()")
+note top
+Spelers kunnen de room nu vinden en joinen.
+end note
 Rel(room, cli1, "toonStatus(room)")
 
 

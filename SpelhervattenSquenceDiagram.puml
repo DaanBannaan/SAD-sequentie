@@ -15,7 +15,7 @@ title Speler hervat spel
 
 Person(user, "Speler")
 
-Component(cli, "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
+Component(cli, "CLI-Service", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
 Component(engine1, "Game-Engine-Service [1]", "Deze component bevat de logica van het spel zelf.")
 Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
 Component(engine2, "Game-Engine-Service [2]", "Deze component bevat de logica van het spel zelf.")

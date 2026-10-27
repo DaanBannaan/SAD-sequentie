@@ -29,34 +29,42 @@ autonumber
 title Speler joint een bestaande room
 
 Person(user, "Speler")
-Person(owner, "Host-speler")
 
-Component(cli, "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
+Component(cli1, "CLI-Service [1]", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
 Component(engine, "Game-Engine-Service", "Deze component bevat de logica van het spel zelf.")
 Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
-Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
+Component(room1, "Room-Service [1]", "Hier verzamelen spelers zich voordat een game begint.")
+Component(room2, "Room-Service [2]", "Hier verzamelen spelers zich voordat een game begint.")
+Component(cli2, "CLI-Service [2]", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
 Component(logging, "Logging-Service", "Hier worden gebeurtenissen en fouten gelogd.")
+
+Person(owner, "Host-speler")
 
 Rel(user, engine, "Geeft aan room te willen zoeken")
 Rel(engine, communication, "zoekRooms()")
-Rel(communication, room, "zoekRooms()")
+Rel(communication, room1, "zoekRooms()")
 
 
-Rel(room, cli, "beschikbareRooms: List<Room>")
-Rel(cli, user, "Toon beschikbare rooms")
+Rel(room1, cli1, "beschikbareRooms: List<Room>")
+Rel(cli1, user, "Toon beschikbare rooms")
 
 
 Rel(user, engine, "kiest room om te joinen")
 Rel(engine, communication, "joinRoom(roomID)")
-Rel(communication, room, "joinRoom(roomID)")
+Rel(communication, room1, "joinRoom(roomID)")
 
 
 alt Room bestaat niet of is niet toegankelijk
-Rel(room, cli, "error room niet toegankelijk")
+Rel(room1, cli1, "error room niet toegankelijk")
 else Room bestaat en is toegankelijk
-Rel(room, logging, "logSpelerJoin()")
-Rel(room, cli, "toonRoom(room)")
-Rel(cli, user, "Toont room en deelnemers")
+Rel(room1, logging, "logSpelerJoin()")
+Rel(communication, room2, "toonStatus(room)")
+Rel(room1, cli1, "toonRoom(room)")
+Rel(cli1, user, "Toont room en deelnemers")
+autonumber 12
+Rel(room2, cli2, "toonRoom(room)")
+autonumber 13
+Rel(cli2, owner, "Toont room en deelnemers")
 end
 
 @enduml

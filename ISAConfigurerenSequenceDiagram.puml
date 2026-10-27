@@ -25,11 +25,13 @@ Component(engine, "Game-Engine-Service", "Deze component bevat de logica van het
 Component(agent, "Agent-Service", "Deze component bevat de logica van een agent.")
 
 Rel(user, engine, "Speler geeft aan agent te willen aanpassen")
+Rel(engine, agent, "getOpties()")
+Rel(agent, engine, "ToonOpties()")
 Rel(engine, cli, "ToonOpties()")
 Rel(user, engine, "Speler geeft aanpassing door")
 Rel(engine, agent, "PasAgentAan(Optie)")
 Rel(engine, cli, "ToonAanpassing(Optie)")
-Rel(engine, user, "Speler ziet aanpassing")
+Rel(cli, user, "Speler ziet aanpassing")
 
 
 
