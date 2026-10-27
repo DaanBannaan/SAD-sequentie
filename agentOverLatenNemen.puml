@@ -17,19 +17,15 @@ Component(player, "Player Service")
 Component(agent, "Agent Service")
 
 Rel(engine, player, disableCharacterControl(playerId))
-Rel(player, engine, succes)
 
-note left: character control inputs van de speler worden nu genegeerd.
+note right: character control inputs van de speler worden nu genegeerd.
 
 Component(comms, "Communication Protocol")
 Rel(engine, comms, transferPlayerControl(playerId))
-Rel(comms, engine, )
-note left: request om character te laten besturen door een agent, wordt doorgestuurd naar de relevante client/node (die besturing van agents handelt.)
-Rel(engine, agent, )
-
+Rel(comms, engine, transferPlayerControl(playerId))
+note right: request om character te laten besturen door een agent, wordt doorgestuurd naar de relevante client/node (die besturing van agents handelt.)
 
 Rel(engine, agent, takeControlPlayer(playerId))
-Rel(agent, engine, succes)
 
 
 

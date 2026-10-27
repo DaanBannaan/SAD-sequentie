@@ -18,7 +18,7 @@ Rel(comms, engine, playerDisconnected(playerId))
 
 Component(agent, "Agent Service")
 
-Rel(engine, agent, takeControlPlayer(playerId))
+Rel(engine, agent, enableCharacterControl(characterId))
 
 
 note right: agent (ISA) bestuurt nu het Character van speler 1
