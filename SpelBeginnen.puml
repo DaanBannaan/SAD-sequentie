@@ -65,14 +65,16 @@ autonumber 8
 Rel(engine, room, "shutdownRoomService()")
 Rel(room, engine, "Roominfo roomInfo")
 note right: Bevat: String gamemode, list<Player> players, int agentAmount
-Rel(engine, world, "createNewWorld()")
-note right: Unieke wereld is gegenereerd.
-Rel(engine, engine, "initBeings(agentAmount)")
+Rel(engine, world, "createNewWorld(characterAmount)")
+note right: Unieke wereld is gegenereerd, met grootte op basis van aantal karakters (spelers + agents)
+Rel(world, engine, WorldData worldData)
+Rel(engine, engine, "initBeings(characterAmount, agentAmount, worldData)")
+note bottom: karakter-agents en monsters geïnitialiseerd, spawn-locatie bepaald d.m.v. worldData. Aantal monsters bepaald d.m.v aantal karakters (spelers + agents)
 
 
 autonumber 12
 Rel(engine, communication, "activateCommunicationProtocol(players)")
-note left: communication-protocol van alle host-speler is nu actief op zoek naar andere nodes en gebruikt hiervoor de spelerinfo-list die is meegegeven
+note left: communication-protocol van host-speler is nu actief op zoek naar andere nodes en gebruikt hiervoor de spelerinfo-list die is meegegeven
 alt alle nodes hebben elkaar gevonden
 Rel(communication, engine, "allPlayersConnected()")
 else één of meerdere nodes nog niet gevonden
@@ -84,16 +86,20 @@ Rel(communication, communication2, "loadGame(gameData)")
 Rel(communication2, engine2, "loadGame(gameData)")
 Rel(engine2, world2, "loadGame(gameData)")
 
-Rel(communication, cli, "ShowGameStarted()")
+Rel(communication, cli, "activateGame()")
 autonumber 20
-Rel(communication2, cli2, "ShowGameStarted()")
+Rel(communication2, cli2, "activateGame()")
 Rel(cli, host, "game is gestart")
 autonumber 21
 Rel(cli2, user, "game is gestart")
-loop Zolang het spel bezig is
-Rel(communication, communication2, "")
-Rel(communication2, communication, "")
+loop
+Rel(communication2, communication2, statusUpdate(sender, update))
+autonumber 22
+Rel(communication, communication2, statusUpdate(sender, update))
+autonumber 22
+Rel(communication2, communication, statusUpdate(sender, update))
 end loop
+note right: Peer-to-peer netwerk is actief
 
 'room service is geen peer to peer, communication protocol wel. Roomservice en communication protocol moeten op dezelfde hoogte staan
 
