@@ -19,38 +19,73 @@ autonumber
 
 title Spel beginnen
 
-Person(user, "Speler")
-Component(cli, "CLI-Service", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
-Component(room, "Room-Service", "Hier verzamelen spelers zich voordat een game begint.")
-Component(communication, "Communication-Protocol", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
-Component(engine, "Game-Engine-Service", "Deze component bevat de logica van het spel zelf.")
-Component(world, "World-Service", "Hier vindt de wereldgeneratie plaats en bevind zich de wereldstatus.")
+Person(host, "Host-Speler")
+Component(cli, "CLI-Service [Host-speler]", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
+Component(room, "Room-Service [Host-speler]", "Hier verzamelen spelers zich voordat een game begint.")
+Component(communication, "Communication-Protocol [Host-speler}", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
+Component(engine, "Game-Engine-Service [Host-speler]", "Deze component bevat de logica van het spel zelf.")
+Component(world, "World-Service [Host-speler]", "Hier vindt de wereldgeneratie plaats en bevind zich de wereldstatus.")
+Component(world2, "World-Service [Andere spelers]", "Hier vindt de wereldgeneratie plaats en bevind zich de wereldstatus.")
+Component(engine2, "Game-Engine-Service [Andere spelers]", "Deze component bevat de logica van het spel zelf.")
+Component(communication2, "Communication-Protocol [Andere spelers]", "Hiermee kunnen verschillende nodes (spelers) met elkaar communiceren, zodat ze synchroon lopen.")
+Component(room2, "Room-Service [Andere spelers]", "Hier verzamelen spelers zich voordat een game begint.")
+Component(cli2, "CLI-Service [Andere spelers]", "Frontend terminal waar de spelers gebeurtenissen kunnen zien.")
+Person(user, "Andere spelers")
+'Rel(room, room, "startCountdown(startCountdownValue)")
+'loop while countdown not complete or amountOfPlayers < minimumAmountOfPlayers
+'
+'alt Room contains 30<players<40 && countdown < 5 minutes
+'Rel(room, room, "startCountdown(5 minutes)")
+'else Room contains 40>players<maxPlayers  && countdown < 30 seconds
+'Rel(room, room, "startCountdown(30 seconds)")
+'end
+'Rel(room, room, "checkAmountOfPlayers")
+'Rel(room, cli, "showCountdown()")
+'end loop
 
-Rel(room, room, "startCountdown(startCountdownValue)")
-loop while countdown not complete or amountOfPlayers < minimumAmountOfPlayers
-
-alt Room contains 30<players<40 && countdown < 5 minutes
-Rel(room, room, "startCountdown(5 minutes)")
-else Room contains 40>players<maxPlayers  && countdown < 30 seconds
-Rel(room, room, "startCountdown(30 seconds)")
-end
-Rel(room, room, "checkAmountOfPlayers")
-Rel(room, cli, "showCountdown()")
-end loop
-
+Rel(host, cli, "Geeft aan dat hij het spel wil beginnen.")
+Rel(cli, engine, "startGame()")
+Rel(engine, room, "gameStarting()")
+Rel(room, room, "saveRoomInfo()")
+Rel(room, room2, "gameStarting(roomInfo)")
+note right: roominfo object bevat: list<Player> players, int agentAmount, String gamemode
+Rel(room2, cli2, "showLoading()")
+autonumber 5
 Rel(room, cli, "showLoading()")
-Rel(cli, user, "show loading")
-Rel(room, communication, "activateCommunicationprotocol()")
-Rel(communication, engine, "createNewWorld()")
+Rel(cli2, user, "ziet laadscherm")
+autonumber 6
+Rel(cli, host, "ziet laadscherm")
+
+Rel(room2, engine2, gameStarting(roomInfo))
+Rel(engine2, room2, "shutdownRoomService()")
+Rel(engine2, communication2, activateCommunicationProtocol(players))
+note bottom: communication-protocol van alle andere spelers is nu actief op zoek naar andere nodes en gebruikt hiervoor de spelerinfo die is meegegeven
+
+
+Rel(engine, room, "shutdownRoomService()")
+Rel(room, engine, "Roominfo roomInfo")
+note right: Bevat: String gamemode, list<Player> players, int agentAmount
 Rel(engine, world, "createNewWorld()")
-Rel(world, engine, "showWorldCreatedSuccesfully()")
-Rel(engine, communication, "showWorldCreatedSuccesfully()")
-Rel(communication, cli, "Show world created succesfully")
-Rel(cli, user, "Show world created succesfully")
+note right: Unieke wereld is gegenereerd.
+Rel(engine, engine, "initBeings(agentAmount)")
 
 
+Rel(engine, communication, "activateCommunicationProtocol(players)")
+note left: communication-protocol van alle andere spelers is nu actief op zoek naar andere nodes en gebruikt hiervoor de spelerinfo die is meegegeven
+
+Rel(engine, communication, "sendGameInfo(gameInfo")
+Rel(communication, communication2, "loadGame(gameInfo)")
+Rel(communication2, engine2, "loadGame(gameInfo)")
+Rel(engine2, world2, "loadGame(gameInfo)")
+Rel(communication, cli, "ShowGameStarted()")
+Rel(cli, host, "game is gestart")
+autonumber 20
+Rel(communication2, cli2, "ShowGameStarted()")
+autonumber 21
+Rel(cli2, user, "game is gestart")
 
 
+'room service is geen peer to peer, communication protocol wel. Roomservice en communication protocol moeten op dezelfde hoogte staan
 
 
 
