@@ -50,18 +50,18 @@ Rel(room, room, "saveRoomInfo()")
 Rel(room, room2, "gameStarting(roomInfo)")
 note right: roominfo object bevat: list<Player> players, int agentAmount, String gamemode
 Rel(room2, cli2, "showLoading()")
-autonumber 5
+autonumber 6
 Rel(room, cli, "showLoading()")
 Rel(cli2, user, "ziet laadscherm")
-autonumber 6
+autonumber 7
 Rel(cli, host, "ziet laadscherm")
 
 Rel(room2, engine2, gameStarting(roomInfo))
 Rel(engine2, room2, "shutdownRoomService()")
+autonumber 10
 Rel(engine2, communication2, activateCommunicationProtocol(players))
-note bottom: communication-protocol van alle andere spelers is nu actief op zoek naar andere nodes en gebruikt hiervoor de spelerinfo die is meegegeven
-
-
+note right: communication-protocol van alle andere spelers is nu actief op zoek naar andere nodes en gebruikt hiervoor de spelerinfo-list die is meegegeven
+autonumber 8
 Rel(engine, room, "shutdownRoomService()")
 Rel(room, engine, "Roominfo roomInfo")
 note right: Bevat: String gamemode, list<Player> players, int agentAmount
@@ -70,20 +70,30 @@ note right: Unieke wereld is gegenereerd.
 Rel(engine, engine, "initBeings(agentAmount)")
 
 
+autonumber 12
 Rel(engine, communication, "activateCommunicationProtocol(players)")
-note left: communication-protocol van alle andere spelers is nu actief op zoek naar andere nodes en gebruikt hiervoor de spelerinfo die is meegegeven
+note left: communication-protocol van alle host-speler is nu actief op zoek naar andere nodes en gebruikt hiervoor de spelerinfo-list die is meegegeven
+alt alle nodes hebben elkaar gevonden
+Rel(communication, engine, "allPlayersConnected()")
+else één of meerdere nodes nog niet gevonden
+Rel(host, cli, geeft aan toch het spel te willen starten)
+Rel(cli, engine, startGameAnyway())
+end alt
+Rel(engine, communication, "sendGameData(gameData)")
+Rel(communication, communication2, "loadGame(gameData)")
+Rel(communication2, engine2, "loadGame(gameData)")
+Rel(engine2, world2, "loadGame(gameData)")
 
-Rel(engine, communication, "sendGameInfo(gameInfo")
-Rel(communication, communication2, "loadGame(gameInfo)")
-Rel(communication2, engine2, "loadGame(gameInfo)")
-Rel(engine2, world2, "loadGame(gameInfo)")
 Rel(communication, cli, "ShowGameStarted()")
-Rel(cli, host, "game is gestart")
 autonumber 20
 Rel(communication2, cli2, "ShowGameStarted()")
+Rel(cli, host, "game is gestart")
 autonumber 21
 Rel(cli2, user, "game is gestart")
-
+loop
+Rel(communication, communication2, "")
+Rel(communication2, communication, "")
+end loop
 
 'room service is geen peer to peer, communication protocol wel. Roomservice en communication protocol moeten op dezelfde hoogte staan
 
