@@ -90,7 +90,7 @@ Rel(communication2, cli2, "ShowGameStarted()")
 Rel(cli, host, "game is gestart")
 autonumber 21
 Rel(cli2, user, "game is gestart")
-loop
+loop Zolang het spel bezig is
 Rel(communication, communication2, "")
 Rel(communication2, communication, "")
 end loop
