@@ -27,7 +27,7 @@ end note
 
 Rel(cli2, user2, "ontvangt en leest het bericht")
 autonumber 5
-Rel(cli1, user, "ontvangt en leest het bericht")
+Rel(cli1, user, "bevestiging: bericht verstuurd")
 
 
 
