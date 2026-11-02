@@ -86,17 +86,19 @@ Rel(communication, communication2, "loadGame(gameData)")
 Rel(communication2, engine2, "loadGame(gameData)")
 Rel(engine2, world2, "loadGame(gameData)")
 
+autonumber 18
 Rel(communication, cli, "activateGame()")
 autonumber 20
 Rel(communication2, cli2, "activateGame()")
+autonumber 19
 Rel(cli, host, "game is gestart")
 autonumber 21
 Rel(cli2, user, "game is gestart")
 loop
 Rel(communication2, communication2, statusUpdate(sender, update))
-autonumber 22
+autonumber 20
 Rel(communication, communication2, statusUpdate(sender, update))
-autonumber 22
+autonumber 23
 Rel(communication2, communication, statusUpdate(sender, update))
 end loop
 note right: Peer-to-peer netwerk is actief
