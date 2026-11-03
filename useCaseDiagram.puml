@@ -1,0 +1,54 @@
+
+@startuml
+left to right direction
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor #FFFFCC
+  BorderColor #000000
+}
+
+actor "AI-agent" as AI
+actor "Speler" as Speler
+actor "Menselijke-speler" as Mens
+actor "Developer" as Developer
+
+AI --|> Speler
+Mens --|> Speler
+
+rectangle "UseCase Diagram" {
+  usecase "Spelsessie opstarten" as Start
+  usecase "Free for All modus spelen" as FFA
+  usecase "Capture the flag spelen" as CTF
+  usecase "Verplaatsen in de wereld" as Verplaatsen
+  usecase "Spelelement toevoegen tijdens het spelen" as Element
+  usecase "Spel pauzeren" as Pauzeren
+  usecase "Bericht versturen" as Bericht
+  usecase "Leaderboard bekijken" as Leaderboard
+  usecase "Features maken" as Features
+  usecase "Patch gereedmaken" as Patch
+}
+
+Speler --> Start
+Speler --> FFA
+Speler --> CTF
+Speler --> Verplaatsen
+Speler --> Element
+
+Mens --> Pauzeren
+Mens --> Bericht
+Mens --> Leaderboard
+
+Developer --> Features
+Developer --> Patch
+
+Start ..> FFA : <<include>>
+Start ..> CTF : <<include>>
+FFA ..> Verplaatsen : <<include>>
+FFA ..> Element : <<include>>
+CTF ..> Verplaatsen : <<include>>
+CTF ..> Element : <<include>>
+Features ..> Patch : <<include>>
+
+@enduml
