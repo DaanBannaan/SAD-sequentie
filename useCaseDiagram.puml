@@ -4,51 +4,69 @@ left to right direction
 
 skinparam shadowing false
 skinparam packageStyle rectangle
+skinparam linetype ortho
 skinparam usecase {
-  BackgroundColor #FFFFCC
-  BorderColor #000000
+  BackgroundColor #FFFFE6
+  BorderColor #444444
 }
 
-actor "AI-agent" as AI
 actor "Speler" as Speler
 actor "Menselijke-speler" as Mens
+actor "AI-agent" as AI
 actor "Developer" as Developer
 
-AI --|> Speler
+' Overerving van actoren
 Mens --|> Speler
+AI --|> Speler
 
-rectangle "UseCase Diagram" {
-  usecase "Spelsessie opstarten" as Start
-  usecase "Free for All modus spelen" as FFA
-  usecase "Capture the flag spelen" as CTF
-  usecase "Verplaatsen in de wereld" as Verplaatsen
-  usecase "Spelelement toevoegen tijdens het spelen" as Element
-  usecase "Spel pauzeren" as Pauzeren
-  usecase "Bericht versturen" as Bericht
-  usecase "Leaderboard bekijken" as Leaderboard
-  usecase "Features maken" as Features
-  usecase "Patch gereedmaken" as Patch
+rectangle "Spelsysteem en ontwikkelomgeving" {
+
+    usecase "UCS01\nSpelsessie opstarten" as UCS01
+    usecase "UCS02\nFree for All spelen" as UCS02
+    usecase "UCS03\nCapture the flag spelen" as UCS03
+    usecase "UCS04\nVerplaatsen in de wereld" as UCS04
+    usecase "UCS05\nSpelelement toevoegen\ntijdens het spelen" as UCS05
+    usecase "UCS06\nOvername AI-agent" as UCS06
+
+
+    usecase "UCMS-01\nSpel pauzeren" as UCMS01
+    usecase "UCMS-02\nBericht versturen" as UCMS02
+    usecase "UCMS-03\nLeaderboard bekijken" as UCMS03
+    usecase "UCMS-04\nAI-agent programmeren" as UCMS04
+
+
+    usecase "UCD-01\nFeatures maken" as UCD01
+    usecase "UCD-02\nPatch gereedmaken" as UCD02
+
 }
 
-Speler --> Start
-Speler --> FFA
-Speler --> CTF
-Speler --> Verplaatsen
-Speler --> Element
+' Relaties speler
+Speler -- UCS01
+Speler -- UCS02
+Speler -- UCS03
+Speler -- UCS04
+Speler -- UCS05
+Speler -- UCS06
+AI -- UCS06
 
-Mens --> Pauzeren
-Mens --> Bericht
-Mens --> Leaderboard
+' Relaties menselijke-speler
+Mens -- UCMS01
+Mens -- UCMS02
+Mens -- UCMS03
+Mens -- UCMS04
 
-Developer --> Features
-Developer --> Patch
+' Relaties developer
+Developer -- UCD01
+Developer -- UCD02
 
-Start ..> FFA : <<include>>
-Start ..> CTF : <<include>>
-FFA ..> Verplaatsen : <<include>>
-FFA ..> Element : <<include>>
-CTF ..> Verplaatsen : <<include>>
-CTF ..> Element : <<include>>
-Features ..> Patch : <<include>>
+' Verplichte onderdelen
+UCS02 ..> UCS01 : <<include>>
+UCS03 ..> UCS01 : <<include>>
+UCS02 ..> UCS04 : <<include>>
+UCS03 ..> UCS04 : <<include>>
+UCMS04 ..> UCS01 : <<include>>
+UCD02 ..> UCD01 : <<include>>
+
+
 
 @enduml
