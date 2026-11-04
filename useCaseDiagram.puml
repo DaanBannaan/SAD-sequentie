@@ -21,38 +21,40 @@ AI --|> Speler
 
 rectangle "Spelsysteem en ontwikkelomgeving" {
 
-    usecase "UCS01\nSpelsessie opstarten" as UCS01
-    usecase "UCS04\nActie uitvoeren met karakter" as UCS04
-    usecase "UCS06\nOvername AI-agent" as UCS06
+    usecase "UC1\nSpelsessie opstarten" as UC1
+    usecase "UC2\nActie uitvoeren met karakter" as UC2
+    usecase "UC4\nOvername AI-agent" as UC4
 
-    usecase "UCMS-01\nSpel pauzeren en hervatten" as UCMS01
-    usecase "UCMS-02\nChatten met medespelers" as UCMS02
-    usecase "UCD-02\nSpel joinen" as UCMSO3
-    usecase "UCMS-04\nAI-agent programmeren" as UCMS04
+    usecase "UC5\nSpel pauzeren en hervatten" as UC5
+    usecase "UC6\nChatten met medespelers" as UC6
+    usecase "UC8\nSpel joinen" as UC8
+    usecase "UC7\nAI-agent programmeren" as UC7
 
-    usecase "UCD-02\nFeatures toevoegen (tijdens speluitvoering)" as UCD02
+    usecase "UC3\nFeatures toevoegen (tijdens speluitvoering)" as UC3
 
 }
 
 ' Relaties speler
-Speler -- UCS01
-Speler -- UCS04
-Speler -- UCS06
-AI -- UCS06
+Speler -- UC2
+Speler -- UC6
+Speler -- UC5
+
+' relaties AI-agent
+AI -- UC4
 
 ' Relaties menselijke-speler
-Mens -- UCMS01
-Mens -- UCMS02
-Mens -- UCMS04
-Mens -- UCMSO3
+Mens -- UC1
+Mens -- UC5
+Mens -- UC7
+Mens -- UC8
 
-' Relaties developer
-Beheerder -- UCD02
+' Relaties beheerder
+Beheerder -- UC3
 
 ' Verplichte onderdelen
-UCS04 ..> UCS01 : <<include>>
-UCMS02 ..> UCS01 : <<include>>
-UCMS01 ..> UCS01 : <<include>>
+UC5 ..> UC1 : <<include>>
+UC2 ..> UC1 : <<include>>
+UC6 ..> UC1 : <<include>>
 
 
 @enduml
