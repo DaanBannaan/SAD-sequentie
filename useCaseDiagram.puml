@@ -37,7 +37,6 @@ rectangle "Spelsysteem en ontwikkelomgeving" {
 ' Relaties speler
 Speler -- UC2
 Speler -- UC6
-Speler -- UC5
 
 ' relaties AI-agent
 AI -- UC4
