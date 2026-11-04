@@ -13,7 +13,7 @@ skinparam usecase {
 actor "Speler" as Speler
 actor "Menselijke-speler" as Mens
 actor "AI-agent" as AI
-actor "Developer" as Developer
+actor "Beheerder" as Beheerder
 
 ' Overerving van actoren
 Mens --|> Speler
@@ -47,7 +47,7 @@ Mens -- UCMS04
 Mens -- UCMSO3
 
 ' Relaties developer
-Developer -- UCD02
+Beheerder -- UCD02
 
 ' Verplichte onderdelen
 UCS04 ..> UCS01 : <<include>>
