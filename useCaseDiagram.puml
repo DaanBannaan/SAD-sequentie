@@ -12,23 +12,23 @@ skinparam usecase {
 
 actor "Speler" as Speler
 actor "Menselijke-speler" as Mens
-actor "AI-agent" as AI
+actor "Agent" as Agent
 actor "Beheerder" as Beheerder
 
 ' Overerving van actoren
 Mens --|> Speler
-AI --|> Speler
+Agent --|> Speler
 
 rectangle "Spelsysteem en ontwikkelomgeving" {
 
     usecase "UC1\nSpelsessie opstarten" as UC1
     usecase "UC2\nActie uitvoeren met karakter" as UC2
-    usecase "UC4\nOvername AI-agent" as UC4
+    usecase "UC4\nOvername Agent" as UC4
 
     usecase "UC5\nSpel pauzeren en hervatten" as UC5
     usecase "UC6\nChatten met medespelers" as UC6
     usecase "UC8\nSpel joinen" as UC8
-    usecase "UC7\nAI-agent programmeren" as UC7
+    usecase "UC7\nAgent programmeren" as UC7
 
     usecase "UC3\nFeatures toevoegen (tijdens speluitvoering)" as UC3
 
@@ -39,7 +39,7 @@ Speler -- UC2
 Speler -- UC6
 
 ' relaties AI-agent
-AI -- UC4
+Agent -- UC4
 
 ' Relaties menselijke-speler
 Mens -- UC1
